@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="robots"
+      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    />
+    <title>Crosstrik | I Nostri Corsi di Cross e Functional Training</title>
+    <meta
+      name="description"
+      content="Scopri tutti i corsi Crosstrik a Cavriglia: CrossTrik, Ramping, Barbell, Yoga, Pilates, Longevity e CrossTrik Kids. Allenamenti funzionali per ogni livello nel Valdarno."
+    />
+    <link rel="icon" type="image/png" href="assets/img/logo_light.png" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Roboto:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+  </head>
+  <body>
+    <!-- JAVASCRIPT INIETTERÀ LA NAVBAR QUI -->
+    <div id="navbar-container"></div>
+
+    <div class="container">
+      <main>
+        <!-- HERO -->
+        <section class="hero-custom">
+          <div class="hero-media">
+            <img
+              src="assets/img/background.webp"
+              alt="Corsi di Cross Training a Cavriglia"
+            />
+          </div>
+          <div class="hero-overlay"></div>
+
+          <div class="h-100 w-100 position-relative" style="z-index: 3">
+            <div
+              class="row h-100 align-items-center justify-content-center m-0"
+            >
+              <div class="col-12">
+                <img
+                  src="assets/img/logo_full.png"
+                  alt="Logo Crosstrik"
+                  class="hero-logo mb-3"
+                />
+                <h1 class="hero-titolo mb-2">I Nostri Corsi</h1>
+                <h2 class="hero-sottotitolo mb-3">
+                  Un percorso per ogni obiettivo e ogni livello
+                </h2>
+                <p class="hero-testo mb-5">
+                  Dal functional training ad alta intensità allo Yoga: scegli
+                  l'allenamento più adatto a te.
+                </p>
+                <div class="hero-bottone-box">
+                  <a href="info.html#prenotazione" class="bottone"
+                    >Prenota una prova</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- LISTA CORSI (card complete generate da data.js) -->
+        <section id="lista-corsi" class="sezione-custom py-4 mt-5">
+          <div
+            class="row riga-corsi p-3 justify-content-center"
+            id="lista-corsi-wrapper"
+          ></div>
+        </section>
+      </main>
+    </div>
+
+    <!-- FINE CONTENITORE PRINCIPALE -->
+    <!-- Il footer include Instagram + Sponsor + Footer -->
+    <div id="footer-container"></div>
+    <script src="https://elfsightcdn.com/platform.js" async></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/data.js"></script>
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>

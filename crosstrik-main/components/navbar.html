@@ -1,0 +1,111 @@
+<header
+  id="site-header"
+  class="navbar-custom bg-dark p-0"
+>
+  <div class="container p-0">
+    <nav class="navbar navbar-expand-lg navbar-dark py-2 px-4">
+      <!-- Logo (versione full + light, alternate via JS allo scroll) -->
+      <a class="navbar-brand m-0" href="index.html" title="Torna alla Home">
+        <img
+          src="assets/img/logo_full.png"
+          alt="Logo Palestra Crosstrik Cavriglia Valdarno"
+          class="logo-img logo-full"
+        />
+        <img
+          src="assets/img/logo_light.png"
+          alt="Logo Palestra Crosstrik Cavriglia Valdarno"
+          class="logo-img logo-light"
+        />
+      </a>
+
+      <!-- Bottone Hamburger -->
+      <button
+        class="navbar-toggler me-2"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#menuPrincipale"
+        aria-controls="menuPrincipale"
+        aria-expanded="false"
+        aria-label="Apri menu"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Voci del Menu -->
+      <div
+        class="collapse navbar-collapse px-3 px-lg-0 pb-3 pb-lg-0"
+        id="menuPrincipale"
+      >
+        <ul
+          class="navbar-nav ms-auto align-items-center gap-3 mt-3 mt-lg-0 text-center"
+        >
+          <li class="nav-item link-item">
+            <a
+              class="nav-link"
+              href="novita.html#hero-novita"
+              style="
+                color: var(--primary) !important;
+                font-weight: 700;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+              "
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-stars"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M7.657 6.247c.11-.33.576-.33.686 0l.645 1.937a2.89 2.89 0 0 0 1.829 1.828l1.936.645c.33.11.33.576 0 .686l-1.937.645a2.89 2.89 0 0 0-1.828 1.829l-.645 1.936a.361.361 0 0 1-.686 0l-.645-1.937a2.89 2.89 0 0 0-1.828-1.828l-1.937-.645a.361.361 0 0 1 0-.686l1.937-.645a2.89 2.89 0 0 0 1.828-1.828l.645-1.937z"
+                />
+              </svg>
+              NEXT LEVEL
+            </a>
+          </li>
+          <li class="nav-item link-item">
+            <a class="nav-link text-white" href="index.html">Home</a>
+          </li>
+          <li class="nav-item link-item">
+            <a class="nav-link text-white" href="corsi.html#lista-corsi"
+              >Corsi</a
+            >
+          </li>
+          <li class="nav-item link-item">
+            <a class="nav-link text-white" href="coach.html#lista-coach"
+              >Il Team</a
+            >
+          </li>
+          <li class="nav-item link-item">
+            <a class="nav-link text-white" href="info.html#orari"
+              >Info, Orari e Prenota</a
+            >
+          </li>
+          <li class="nav-item link-item mt-2 mt-lg-0">
+            <a
+              class="nav-link link-evidenziato"
+              href="https://maps.app.goo.gl/YjE4ncyMeNyLMua96"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Dove Trovarci
+            </a>
+          </li>
+          <li class="nav-item ms-lg-3 mt-3 mt-lg-0 d-flex align-items-center">
+            <div id="google_translate_element"></div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- CTA STICKY (ancorata al bottom, presente su ogni pagina) -->
+<div id="cta-sticky" class="cta-sticky">
+  <a href="info.html#prenotazione" class="bottone cta-sticky-btn">
+    Prenota una prova
+  </a>
+</div>

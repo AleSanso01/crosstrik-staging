@@ -1,0 +1,1241 @@
+/* =========================================
+
+   VARIABILI GLOBALI E SETUP
+
+   ========================================= */
+
+:root {
+  --primary: #bc13fe;
+  --secondary: #930cd2;
+
+  --accent-lime: #ccff00; /* Accento lime: dettagli, PERFORMANCE, highlight */
+
+  --details: #ccff00; /* Ciano dettagli: hover e piccole linee decorative */
+
+  --nero-crosstrik: #0a0a0a; /* Nero profondissimo per gli sfondi base */
+
+  --grigio-scuro: #181818; /* Grigio molto scuro per le card */
+
+  --grigio-medio: #2a2a2a; /* Grigio di transizione per i gradienti */
+
+  --testo-chiaro: #f4f4f4; /* Bianco sporco per non affaticare la vista */
+
+  --testo-grigio: #aaaaaa; /* Grigio per i testi secondari/descrizioni */
+
+  --bianco: #ffffff;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  color: var(--nero-crosstrik);
+  line-height: 1.6;
+  position: relative;
+  min-height: 100vh;
+}
+
+/* Sfondo fisso performante sia su Desktop che su Mobile */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Lo spinge dietro a tutti i contenuti */
+  background: linear-gradient(
+    135deg,
+    rgba(188, 19, 254, 0.8) 0%,
+    rgba(188, 19, 254, 0.8) 15%,
+    var(--bianco) 15%,
+    var(--bianco) 85%,
+    rgba(20, 20, 20, 0.95) 85%,
+    rgba(20, 20, 20, 0.95) 100%
+  );
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.hero-titolo,
+.titolo-sezione,
+.titolo-corso,
+.nome-coach {
+  font-family: "Oswald", sans-serif;
+
+  text-transform: uppercase;
+
+  margin-bottom: 0;
+
+  color: var(--primary);
+}
+
+p {
+  color: var(--nero-crosstrik);
+}
+
+/* =========================================
+
+   NAVBAR E MENU (Responsive)
+
+   ========================================= */
+
+.navbar-custom {
+  background-color: var(--nero-crosstrik) !important;
+
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
+}
+
+/* Crossfade logo full <-> light: i due loghi si sovrappongono nella
+   stessa cella grid e si dissolvono in opacity (animabile). */
+.navbar-brand {
+  display: grid;
+  align-items: center;
+  justify-items: start;
+}
+
+.logo-img {
+  grid-area: 1 / 1; /* stessa cella: uno sopra l'altro */
+  height: auto;
+  max-width: 160px;
+  max-height: 72px;
+  transition:
+    max-height 0.35s ease,
+    max-width 0.35s ease,
+    opacity 0.35s ease;
+}
+
+/* In cima: logo full visibile, light nascosto (ma presente per il crossfade) */
+.logo-full {
+  opacity: 1;
+}
+
+.logo-light {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Scrolled: dissolvenza verso il logo light + loghi più piccoli */
+#site-header.is-scrolled .logo-full {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#site-header.is-scrolled .logo-light {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#site-header.is-scrolled .logo-img {
+  max-height: 42px;
+  max-width: 110px;
+}
+
+/* Header più alto in cima, si condensa allo scroll */
+#site-header .navbar {
+  transition: padding 0.35s ease;
+  padding-top: 0.75rem !important;
+  padding-bottom: 0.75rem !important;
+}
+
+#site-header.is-scrolled .navbar {
+  padding-top: 0.25rem !important;
+  padding-bottom: 0.25rem !important;
+}
+
+/* Lo STICKY va sul contenitore (figlio diretto del body): così l'header
+   segue lo scroll per tutta la pagina. Messo sull'header non funziona,
+   perché #navbar-container è alto quanto l'header e lo sticky "molla" subito. */
+#navbar-container {
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+}
+
+/* Header: relativo dentro il contenitore sticky, con nascondi/mostra via transform */
+#site-header {
+  position: relative;
+  width: 100%;
+  transition: transform 0.35s ease;
+  will-change: transform;
+}
+
+#site-header.is-hidden {
+  transform: translateY(-100%);
+}
+
+.link-item a {
+  font-family: "Oswald", sans-serif;
+
+  font-size: 1.1rem;
+
+  font-weight: 500;
+
+  text-transform: uppercase;
+
+  letter-spacing: 1px;
+
+  position: relative;
+
+  transition: color 0.3s ease;
+
+  white-space: nowrap;
+
+  color: var(--bianco) !important; /* Testo chiaro di base */
+}
+
+.link-item a:hover {
+  color: var(--secondary) !important; /* Lime al passaggio del mouse */
+}
+
+.link-evidenziato {
+  color: var(--primary) !important;
+}
+
+.navbar-toggler:focus {
+  box-shadow: none;
+
+  border-color: var(--primary);
+}
+
+@media (min-width: 992px) {
+  .link-item a::after {
+    content: "";
+
+    position: absolute;
+
+    width: 0;
+
+    height: 3px;
+
+    bottom: -2px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    background-color: var(--details);
+
+    transition: width 0.3s ease;
+  }
+
+  .link-item a:hover::after {
+    width: 80%;
+  }
+}
+
+/* =========================================
+
+   HERO SECTION
+
+   ========================================= */
+
+.hero-custom {
+  position: relative;
+
+  height: 80vh;
+
+  max-height: 600px;
+
+  overflow: hidden;
+
+  color: var(--bianco);
+
+  text-align: center;
+
+  border-radius: 0px 0px 20px 20px;
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+}
+
+.hero-media {
+  position: absolute;
+
+  top: 0;
+
+  left: 0;
+
+  width: 100%;
+
+  height: 100%;
+
+  z-index: 1;
+}
+
+.hero-media img,
+.hero-media video {
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+}
+
+.hero-overlay {
+  position: absolute;
+
+  top: 0;
+
+  left: 0;
+
+  width: 100%;
+
+  height: 100%;
+
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 10, 10, 0.5),
+    rgba(10, 10, 10, 0.95)
+  );
+
+  z-index: 2;
+}
+
+.hero-titolo {
+  font-size: 4.5rem;
+
+  font-weight: 700;
+
+  letter-spacing: 2px;
+
+  text-shadow: 2px 2px 15px rgba(0, 0, 0, 0.8);
+}
+
+.hero-sottotitolo {
+  font-size: 1.8rem;
+
+  color: var(--primary);
+
+  font-weight: 700;
+
+  text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.9);
+}
+
+.hero-testo {
+  font-size: 1.2rem;
+
+  font-weight: 300;
+
+  max-width: 600px;
+
+  margin: 0 auto;
+
+  color: var(--testo-chiaro);
+}
+
+/* =========================================
+
+   BOTTONI GLOBALI
+
+   ========================================= */
+
+.bottone,
+.btn-leggi {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+
+  color: var(--nero-crosstrik);
+
+  border: none;
+
+  border-radius: 30px;
+
+  font-family: "Oswald", sans-serif;
+
+  font-weight: 700;
+
+  font-size: 1.1rem;
+
+  text-transform: uppercase;
+
+  letter-spacing: 1px;
+
+  padding: 12px 35px;
+
+  text-decoration: none;
+
+  display: inline-block;
+
+  box-shadow: 0 4px 15px rgba(198, 255, 0, 0.2);
+
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+  cursor: pointer;
+}
+
+.bottone:hover,
+.btn-leggi:hover {
+  transform: translateY(-3px);
+
+  box-shadow: 0 8px 25px rgba(198, 255, 0, 0.4);
+
+  background: linear-gradient(135deg, var(--secondary), var(--primary));
+}
+
+.btn-leggi {
+  font-size: 0.9rem;
+
+  padding: 10px 24px;
+
+  margin-top: 15px;
+}
+
+/* =========================================
+
+   SEZIONI GENERICHE E TITOLI
+
+   ========================================= */
+
+.sezione-custom {
+  background-color: transparent;
+}
+
+.titolo-sezione {
+  font-size: 2.5rem;
+
+  text-align: center;
+
+  position: relative;
+
+  padding-bottom: 15px;
+
+  margin-bottom: 30px;
+}
+
+.titolo-sezione::after {
+  content: "";
+
+  position: absolute;
+
+  bottom: 0;
+
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  width: 80px;
+
+  height: 4px;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--details),
+    transparent
+  ); /* Linea dettaglio ciano sfumata */
+
+  border-radius: 2px;
+}
+
+/* =========================================
+
+   CARDS CONDIVISE (Struttura base)
+
+   ========================================= */
+
+.card-corso,
+.card-coach,
+.card-prezzo,
+.box-orari,
+.iframe-box {
+  /* Questo è il cuore del nuovo design: un gradiente scuro molto elegante */
+
+  background: linear-gradient(
+    145deg,
+    var(--grigio-medio) 0%,
+    var(--nero-crosstrik) 100%
+  );
+
+  border: 1px solid #333333; /* Bordo sottilissimo per dare profondità */
+
+  border-radius: 15px;
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+
+  display: flex;
+
+  flex-direction: column;
+}
+
+.card-corso img,
+.foto-coach {
+  width: 100%;
+
+  height: 250px;
+
+  object-fit: cover;
+
+  border-radius: 14px; /* Arrotonda solo sopra */
+}
+
+/* =========================================
+
+   CARD CORSI
+
+   ========================================= */
+
+.card-corso {
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+}
+
+.card-corso:hover {
+  transform: translateY(-10px);
+
+  box-shadow: 0 15px 30px rgba(34, 211, 238, 0.15); /* Alone ciano dettaglio */
+
+  border-color: var(--details);
+}
+
+.titolo-corso {
+  font-size: 1.8rem;
+
+  color: var(--testo-chiaro);
+}
+
+.descrizione-corso {
+  color: var(--testo-grigio);
+
+  font-size: 1rem;
+}
+
+/* =========================================
+
+   CARD COACH
+
+   ========================================= */
+
+.card-coach {
+  border-bottom: 3px solid #333333;
+}
+
+.card-coach:hover {
+  border-bottom-color: var(
+    --details
+  ); /* Si accende di ciano sotto al passaggio del mouse */
+
+  transform: translateY(-5px);
+}
+
+.ruolo-coach {
+  color: var(--nero-crosstrik);
+
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+
+  display: inline-block;
+
+  padding: 7px 10px;
+
+  border-radius: 15px;
+
+  font-weight: 700;
+
+  font-size: 0.85rem;
+
+  text-transform: uppercase;
+
+  letter-spacing: 1px;
+
+  margin-bottom: 10px;
+
+  box-shadow: 0 2px 10px rgba(198, 255, 0, 0.2);
+}
+
+.bio-coach {
+  color: var(--testo-grigio);
+
+  font-size: 1rem;
+}
+
+/* =========================================
+
+   TESTO TRONCATO (PER JS)
+
+   ========================================= */
+
+.testo-troncato {
+  display: -webkit-box;
+
+  -webkit-line-clamp: 2;
+
+  -webkit-box-orient: vertical;
+
+  overflow: hidden;
+
+  transition: all 0.3s ease;
+}
+
+.testo-espanso {
+  -webkit-line-clamp: unset;
+}
+
+/* =========================================
+
+   ORARI E IFRAME
+
+   ========================================= */
+
+.box-orari,
+.iframe-box {
+  padding: 30px;
+
+  height: 100%;
+}
+
+.immagine-orari img {
+  width: 100%;
+
+  height: auto;
+
+  object-fit: contain;
+
+  border-radius: 10px;
+}
+
+.iframe-box iframe {
+  border-radius: 10px;
+
+  opacity: 0.85; /* Abbassa la luminosità della mappa Google per integrarsi nel dark mode */
+
+  transition: opacity 0.3s ease;
+}
+
+.iframe-box iframe:hover {
+  opacity: 1; /* Si illumina al passaggio del mouse */
+}
+
+/*SOCIAL*/
+
+.eapps-instagram-feed-header {
+  border-radius-top: 30px;
+
+  border-radius-bottom: 30px;
+} /* =========================================
+   CARD TARIFFE - STILE DARK & MODERN
+   ========================================= */
+
+.card-prezzo {
+  background: var(--grigio-scuro); /* Sfondo scuro per far risaltare il lime */
+  border: 2px solid var(--primary);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.card-prezzo:hover {
+  transform: translateY(-8px);
+  border-color: #555;
+}
+
+/* Stili Testo Card */
+.nome-piano {
+  color: var(--testo-chiaro);
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+.text-lime {
+  color: var(--primary) !important;
+}
+
+/* La Card Premium (Più Scelta) */
+.piano-premium {
+  border: 2px solid var(--primary);
+  background: linear-gradient(145deg, #111111 0%, var(--grigio-scuro) 100%);
+  transform: scale(1.05);
+  z-index: 2;
+  box-shadow: 0 15px 40px rgba(198, 255, 0, 0.15);
+}
+
+.piano-premium:hover {
+  transform: scale(1.05) translateY(-8px);
+  border-color: var(--secondary);
+  box-shadow: 0 20px 50px rgba(198, 255, 0, 0.3);
+}
+
+/* =========================================
+   PIANO PERFORMANCE (accento lime #CCFF00)
+   Cambia --accent-lime in :root per testare altre tonalità:
+   si aggiornano bordo, titolo, prezzo, glow e hover del bottone.
+   ========================================= */
+.piano-performance {
+  border: 2px solid var(--accent-lime);
+  border-top-width: 3px;
+  box-shadow: 0 10px 30px rgba(204, 255, 0, 0.12);
+}
+
+.piano-performance:hover {
+  border-color: var(--accent-lime);
+  box-shadow: 0 18px 45px rgba(204, 255, 0, 0.28);
+}
+
+.piano-performance .nome-piano {
+  color: var(--accent-lime);
+  text-shadow: 0 0 18px rgba(204, 255, 0, 0.35);
+}
+
+.piano-performance .prezzo-grande {
+  color: var(--accent-lime);
+}
+
+.piano-performance .btn-mostra-prezzo:hover {
+  border-color: var(--accent-lime);
+  color: var(--accent-lime);
+}
+
+.piano-performance .bottone-outline {
+  border-color: var(--accent-lime);
+  color: var(--accent-lime) !important;
+}
+
+.piano-performance .bottone-outline:hover {
+  background: var(--accent-lime);
+  color: var(--nero-crosstrik) !important;
+}
+
+/* -----------------------------------------
+   UTILITY LIME (spargi il dettaglio dove vuoi per testare)
+   ----------------------------------------- */
+.text-accent {
+  color: var(--accent-lime) !important;
+}
+
+.border-accent {
+  border-color: var(--accent-lime) !important;
+}
+
+.glow-accent {
+  box-shadow: 0 0 25px rgba(204, 255, 0, 0.35);
+}
+
+/* Badge "Più Scelto" */
+.badge-popolare {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--primary);
+  color: var(--nero-crosstrik);
+  font-family: "Oswald", sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 5px 20px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  z-index: 3;
+  box-shadow: 0 4px 10px rgba(198, 255, 0, 0.3);
+}
+
+/* =========================================
+   BOTTONI E PREZZI
+   ========================================= */
+
+/* Bottone per svelare il prezzo (Minimal/Ghost) */
+.btn-mostra-prezzo {
+  background: transparent;
+  color: var(--testo-grigio);
+  border: 1px dashed #555;
+  border-radius: 10px;
+  padding: 12px 20px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-mostra-prezzo:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  border-style: solid;
+}
+
+.btn-mostra-prezzo-premium {
+  border-color: var(--primary);
+  border-style: solid;
+  color: var(--primary);
+}
+
+/* Animazione Fade-in */
+.prezzo-nascosto {
+  display: none;
+  opacity: 0;
+}
+
+.fade-in-attivo {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 4px;
+  animation: fadeInPrezzo 0.5s ease forwards;
+}
+
+.prezzo-grande {
+  font-size: 3.5rem;
+  font-family: "Oswald", sans-serif;
+  font-weight: 700;
+  color: var(--primary);
+  line-height: 1;
+}
+
+.valuta,
+.periodo {
+  font-size: 1.2rem;
+  color: var(--testo-grigio);
+  font-weight: 300;
+}
+
+/* Variante Bottone Secondario (Per i piani non premium) */
+.bottone-outline {
+  background: transparent;
+  border: 2px solid var(--primary);
+  color: var(--primary) !important;
+  box-shadow: none;
+}
+.bottone-outline:hover {
+  background: var(--primary);
+  color: var(--nero-crosstrik) !important;
+}
+
+@keyframes fadeInPrezzo {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* =========================================
+
+   FAQ (Sovrascrittura Bootstrap Accordion)
+
+   ========================================= */
+
+.accordion-item {
+  background-color: var(--grigio-scuro);
+
+  border: 1px solid #333 !important;
+
+  border-radius: 10px !important;
+
+  overflow: hidden;
+
+  margin-bottom: 10px;
+}
+
+.accordion-button {
+  background-color: var(--grigio-scuro) !important;
+
+  color: var(--testo-chiaro) !important;
+
+  font-weight: 500;
+}
+
+.accordion-button:not(.collapsed) {
+  background: linear-gradient(
+    145deg,
+    var(--grigio-medio),
+    var(--nero-crosstrik)
+  ) !important;
+
+  color: var(--primary) !important;
+
+  box-shadow: inset 0 -1px 0 rgba(198, 255, 0, 0.2);
+}
+
+.accordion-button::after {
+  filter: invert(1); /* Fa diventare bianca la freccetta di Bootstrap */
+}
+
+.accordion-button:not(.collapsed)::after {
+  filter: invert(80%) sepia(80%) saturate(1000%) hue-rotate(30deg)
+    brightness(100%) contrast(100%); /* Trick per colorare la freccetta di lime (approssimativo) */
+}
+
+.accordion-body {
+  color: var(--testo-grigio);
+}
+
+.accordion-button:focus {
+  border-color: var(--primary);
+
+  box-shadow: 0 0 0 0.25rem rgba(198, 255, 0, 0.15);
+}
+
+/* =========================================
+
+   FOOTER CUSTOM
+
+   ========================================= */
+
+.footer-custom {
+  background-color: #050505; /* Uno sfondo ancora più profondo del body per staccare */
+
+  border-top: 3px solid var(--primary);
+}
+
+/* Sovrascrivo il colore dei paragrafi per renderli leggibili sul fondo scuro */
+
+.footer-custom p {
+  color: var(--testo-grigio);
+}
+
+/* Titolo principale del footer */
+
+.footer-titolo {
+  color: var(--primary);
+
+  letter-spacing: 2px;
+
+  font-size: 2.2rem;
+}
+
+/* Sottotitoli delle colonne */
+
+.titolo-footer-col {
+  color: var(
+    --testo-chiaro
+  ); /* Manteniamo il bianco per non abusare del lime */
+
+  font-size: 1.4rem;
+
+  letter-spacing: 1px;
+}
+
+/* Animazione per la lista dei link */
+
+.footer-links li {
+  transition: transform 0.3s ease;
+}
+
+.footer-links li:hover {
+  transform: translateX(
+    8px
+  ); /* Effetto scorrimento laterale al passaggio del mouse */
+}
+
+/* Stile per tutti i link del footer (menu, mappa, privacy) */
+
+.footer-links a,
+.link-mappa,
+.iubenda-white {
+  color: var(--testo-chiaro) !important;
+
+  text-decoration: none;
+
+  transition: color 0.3s ease;
+
+  font-family: "Roboto", sans-serif;
+}
+
+.footer-links a:hover,
+.link-mappa:hover,
+.iubenda-white:hover {
+  color: var(--primary) !important;
+}
+
+/* Indirizzo (sovrascrive il font in corsivo di default del tag <address>) */
+
+.footer-indirizzo {
+  font-style: normal;
+
+  line-height: 1.8;
+}
+
+/* Bottone Social (Stile Outline che si riempie al passaggio) */
+
+.social-btn {
+  background: transparent;
+
+  color: var(--primary);
+
+  border: 2px solid var(--primary);
+
+  border-radius: 30px;
+
+  font-family: "Oswald", sans-serif;
+
+  font-weight: 700;
+
+  font-size: 0.95rem;
+
+  text-transform: uppercase;
+
+  letter-spacing: 1px;
+
+  padding: 10px 25px;
+
+  text-decoration: none;
+
+  display: inline-block;
+
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.social-btn:hover {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+
+  color: var(--nero-crosstrik) !important;
+
+  box-shadow: 0 4px 15px rgba(198, 255, 0, 0.4);
+
+  transform: translateY(-3px);
+
+  border-color: transparent;
+}
+
+/* Testi secondari e copyright */
+
+.testo-grigio-chiaro {
+  color: var(--testo-grigio) !important;
+}
+
+/* =========================================
+   STYLE GOOGLE TRANSLATE WIDGET
+   ========================================= */
+
+#google_translate_element select {
+  font-family: "Oswald", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border: 1px solid var(--primary);
+  background-color: transparent;
+  color: var(--testo-chiaro);
+  padding: 6px 15px;
+  border-radius: 30px;
+  text-transform: uppercase;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  letter-spacing: 1px;
+}
+
+#google_translate_element select:hover {
+  background-color: var(--primary);
+  color: var(--nero-crosstrik) !important;
+  box-shadow: 0 4px 15px rgba(198, 255, 0, 0.2);
+}
+
+#google_translate_element select option {
+  background-color: var(--nero-crosstrik);
+  color: var(--testo-chiaro);
+}
+
+.goog-te-gadget {
+  color: transparent !important;
+  font-size: 0px !important;
+}
+
+.goog-te-gadget .goog-te-combo {
+  margin: 0 !important;
+}
+
+.goog-te-banner-frame.skiptranslate,
+.goog-te-banner-frame {
+  display: none !important;
+}
+body {
+  top: 0px !important;
+}
+#goog-gt-tt {
+  display: none !important;
+}
+.goog-tooltip,
+.goog-tooltip:hover {
+  display: none !important;
+}
+.goog-text-highlight {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* =========================================
+   STILI DEDICATI ALLA PAGINA NOVITÀ NEXT LEVEL
+   ========================================= */
+.feature-box {
+  background: linear-gradient(
+    145deg,
+    var(--grigio-scuro) 0%,
+    var(--nero-crosstrik) 100%
+  );
+  border: 1px solid #333;
+  border-radius: 15px;
+  padding: 30px;
+  text-align: center;
+  transition:
+    transform 0.3s,
+    border-color 0.3s;
+}
+.feature-box:hover {
+  transform: translateY(-5px);
+  border-color: var(--primary);
+  box-shadow: 0 10px 25px rgba(198, 255, 0, 0.1);
+}
+.timeline {
+  position: relative;
+  border-left: 2px solid #555;
+  margin-left: 20px;
+  padding-left: 30px;
+}
+.timeline-step {
+  position: relative;
+  margin-bottom: 40px;
+}
+.timeline-step::before {
+  content: "";
+  position: absolute;
+  left: -37px;
+  top: 5px;
+  width: 14px;
+  height: 14px;
+  background: var(--primary);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--primary);
+  border: 2px solid var(--nero-crosstrik);
+}
+.timeline-date {
+  font-family: "Oswald", sans-serif;
+  font-size: 1.3rem;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.hero-novita {
+  /* Sfondo specifico per dare l'effetto di upgrade */
+  background:
+    linear-gradient(to bottom, rgba(10, 10, 10, 0.4), rgba(10, 10, 10, 0.98)),
+    url("../img/corsi/background.png") center/cover;
+  border-bottom: 2px solid var(--grigio-scuro);
+}
+.promo-badge {
+  display: inline-block;
+  background-color: #ff3b3b;
+  color: white;
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: bold;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  position: absolute;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.card-prezzo {
+  margin-top: 20px; /* Spazio per il badge absolute fuori dal box */
+}
+
+/* =========================================
+   LOGO NELLA HERO
+   ========================================= */
+.hero-logo {
+  display: block;
+  margin: 0 auto;
+  max-width: 190px;
+  width: 50%;
+  height: auto;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.7));
+}
+
+@media (max-width: 575.98px) {
+  .hero-logo {
+    max-width: 140px;
+    width: 60%;
+  }
+}
+
+/* =========================================
+   SLIDER ORIZZONTALI CORSI / COACH (HOME)
+   ========================================= */
+.swiper-corsi,
+.swiper-coach {
+  overflow: hidden;
+  padding-bottom: 48px; /* spazio per i bullet di paginazione */
+}
+
+.swiper-corsi .swiper-slide,
+.swiper-coach .swiper-slide {
+  height: auto; /* card di pari altezza */
+  display: flex;
+}
+
+/* Card in versione slider: compatta, senza testo, senza CTA */
+.card-slider {
+  width: 100%;
+  height: 100%;
+  padding: 24px 16px;
+  cursor: default; /* le card nello slider non sono cliccabili */
+}
+
+.card-slider .titolo-corso {
+  font-size: 1.5rem;
+  margin-top: 1rem;
+}
+
+.card-slider .card-coach-foto {
+  margin-bottom: 0;
+}
+
+/* Bullet di paginazione in stile brand */
+.swiper-corsi .swiper-pagination-bullet,
+.swiper-coach .swiper-pagination-bullet {
+  background: var(--testo-grigio);
+  opacity: 0.5;
+  transition: all 0.3s ease;
+}
+
+.swiper-corsi .swiper-pagination-bullet-active,
+.swiper-coach .swiper-pagination-bullet-active {
+  background: var(--primary);
+  opacity: 1;
+}
+
+/* =========================================
+   CTA STICKY (ancorata al bottom, su ogni pagina)
+   - Mobile: a tutta larghezza
+   - Desktop: centrata, larghezza fit-content
+   ========================================= */
+.cta-sticky {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1020;
+  display: flex;
+  justify-content: center;
+  padding: 12px 16px;
+  pointer-events: none; /* solo il bottone intercetta i click */
+}
+
+.cta-sticky-btn {
+  pointer-events: auto;
+  width: 100%;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .cta-sticky {
+    padding: 20px;
+  }
+  .cta-sticky-btn {
+    width: fit-content;
+  }
+}
+
+/* Spazio in fondo per non far coprire i contenuti dalla CTA sticky */
+body {
+  padding-bottom: 88px;
+}
+
+@media (min-width: 768px) {
+  body {
+    padding-bottom: 96px;
+  }
+}
