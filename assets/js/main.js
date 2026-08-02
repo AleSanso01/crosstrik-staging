@@ -80,24 +80,37 @@ function inizializzaGoogleTranslate() {
 // ==========================================
 function setupEventiGlobali() {
   document.body.addEventListener("click", function (e) {
-    // A. Logica Bottoni "Leggi di più"
-    if (e.target && e.target.classList.contains("btn-leggi")) {
-      const bottone = e.target;
-      const cardCorrente =
-        bottone.closest(".card-corso") || bottone.closest(".card-coach");
-      if (!cardCorrente) return;
+    // A. Logica Flip Card
+    if (e.target && e.target.classList.contains("btn-flip")) {
+      const flipper = e.target.closest(".card-flipper");
+      if (flipper) {
+        flipper.classList.add("is-flipped");
+        // Pausa autoplay dello swiper
+        const swiperContainer = e.target.closest(".swiper");
+        if (
+          swiperContainer &&
+          swiperContainer.swiper &&
+          swiperContainer.swiper.autoplay
+        ) {
+          swiperContainer.swiper.autoplay.stop();
+        }
+      }
+    }
 
-      const testo =
-        cardCorrente.querySelector(".descrizione-corso") ||
-        cardCorrente.querySelector(".bio-coach");
-      if (!testo) return;
-
-      // Chiudi automaticamente tutti gli altri testi
-      document.querySelectorAll(".testo-espanso").forEach((el) => {
-        if (el !== testo) el.classList.remove("testo-espanso");
-      });
-
-      testo.classList.toggle("testo-espanso");
+    if (e.target && e.target.classList.contains("btn-flip-back")) {
+      const flipper = e.target.closest(".card-flipper");
+      if (flipper) {
+        flipper.classList.remove("is-flipped");
+        // Riprendi autoplay
+        const swiperContainer = e.target.closest(".swiper");
+        if (
+          swiperContainer &&
+          swiperContainer.swiper &&
+          swiperContainer.swiper.autoplay
+        ) {
+          swiperContainer.swiper.autoplay.start();
+        }
+      }
     }
 
     // B. Logica Bottoni "Vedi Prezzo"
@@ -129,9 +142,28 @@ function renderContenuti() {
     sliderCorsi.innerHTML = CORSI.map(
       (c) => `
       <div class="swiper-slide">
-        <div class="card-corso card-slider text-center">
-          <img src="${c.img}" alt="${c.alt}" class="img-fluid" loading="lazy" />
-          <h3 class="titolo-corso mt-3">${c.nome}</h3>
+        <div class="card-flip-container">
+          <div class="card-flipper">
+            <!-- FRONTE -->
+            <div class="card-front card-corso card-slider py-4 px-3 text-center d-flex flex-column justify-content-between">
+              <div>
+                <img src="${c.img}" alt="${c.alt}" class="img-fluid" loading="lazy" />
+                <h3 class="titolo-corso mt-3 pb-2">${c.nome}</h3>
+              </div>
+              <button class="btn-flip btn-leggi w-100 mt-3">Leggi di più</button>
+            </div>
+            
+            <!-- RETRO -->
+            <div class="card-back text-start d-flex flex-column p-0">
+              <div class="card-back-scrollable p-4 flex-grow-1" style="overflow-y: auto;">
+                <h3 class="titolo-corso mb-3 text-center" style="font-size:1.6rem">${c.nome}</h3>
+                <p class="descrizione-corso testo-chiaro mb-0" style="font-size: 0.95rem; color: var(--testo-chiaro);">${c.descrizione}</p>
+              </div>
+              <div class="p-3" style="border-top: 1px solid #333; background: var(--grigio-scuro);">
+                <button class="btn-flip-back bottone w-100 py-2" style="background:transparent; border: 1px solid var(--primary); color:var(--primary)">Indietro</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>`,
     ).join("");
@@ -142,15 +174,31 @@ function renderContenuti() {
     sliderCoach.innerHTML = COACH.map(
       (c) => `
       <div class="swiper-slide">
-        <article class="card-coach card-slider p-4 text-center">
-          <div class="card-coach-foto pb-3">
-            <img src="${c.img}" alt="${c.alt}" class="foto-coach" loading="lazy" />
+        <div class="card-flip-container">
+          <div class="card-flipper">
+            <!-- FRONTE -->
+            <article class="card-front card-coach card-slider p-4 text-center d-flex flex-column justify-content-between">
+              <div>
+                <img src="${c.img}" alt="${c.alt}" class="img-fluid pb-3 foto-coach" loading="lazy" />
+                <h3 class="nome-coach mb-3">${c.nome}</h3>
+                <p class="ruolo-coach mb-3">${c.ruolo}</p>
+              </div>
+              <button class="btn-flip btn-leggi w-100 mt-3 pt-2 pb-2">Leggi di più</button>
+            </article>
+
+            <!-- RETRO -->
+            <article class="card-back text-start d-flex flex-column p-0">
+              <div class="card-back-scrollable p-4 flex-grow-1" style="overflow-y: auto;">
+                <h3 class="nome-coach mb-3 text-center" style="font-size: 1.6rem">${c.nome}</h3>
+                <p class="ruolo-coach mb-3 text-center" style="color:var(--primary); background: none;">${c.ruolo}</p>
+                <p class="bio-coach testo-chiaro mb-0" style="color: var(--testo-chiaro); font-size: 0.95rem;">${c.bio}</p>
+              </div>
+              <div class="p-3" style="border-top: 1px solid #333; background: var(--grigio-scuro);">
+                <button class="btn-flip-back bottone w-100 py-2" style="background:transparent; border: 1px solid var(--primary); color:var(--primary)">Indietro</button>
+              </div>
+            </article>
           </div>
-          <div class="card-coach-testo">
-            <h3 class="nome-coach pb-1">${c.nome}</h3>
-            <p class="ruolo-coach pb-2 mb-0">${c.ruolo}</p>
-          </div>
-        </article>
+        </div>
       </div>`,
     ).join("");
   }
@@ -161,11 +209,28 @@ function renderContenuti() {
     listaCorsi.innerHTML = CORSI.map(
       (c) => `
       <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-4">
-        <div class="card-corso py-5 px-3 text-center">
-          <img src="${c.img}" alt="${c.alt}" class="img-fluid" loading="lazy" />
-          <h3 class="titolo-corso mt-3 pb-2">${c.nome}</h3>
-          <p class="descrizione-corso testo-troncato text-start">${c.descrizione}</p>
-          <button class="btn-leggi">Leggi di più</button>
+        <div class="card-flip-container">
+          <div class="card-flipper">
+            <!-- FRONTE -->
+            <div class="card-front card-corso py-4 px-3 text-center d-flex flex-column justify-content-between">
+              <div>
+                <img src="${c.img}" alt="${c.alt}" class="img-fluid" loading="lazy" />
+                <h3 class="titolo-corso mt-3 pb-2">${c.nome}</h3>
+              </div>
+              <button class="btn-flip btn-leggi w-100 mt-3">Leggi di più</button>
+            </div>
+            
+            <!-- RETRO -->
+            <div class="card-back text-start d-flex flex-column p-0">
+              <div class="card-back-scrollable p-4 flex-grow-1" style="overflow-y: auto;">
+                <h3 class="titolo-corso mb-3 text-center" style="font-size:1.6rem">${c.nome}</h3>
+                <p class="descrizione-corso testo-chiaro mb-0" style="font-size: 0.95rem; color: var(--testo-chiaro);">${c.descrizione}</p>
+              </div>
+              <div class="p-3" style="border-top: 1px solid #333; background: var(--grigio-scuro);">
+                <button class="btn-flip-back bottone w-100 py-2" style="background:transparent; border: 1px solid var(--primary); color:var(--primary)">Indietro</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>`,
     ).join("");
@@ -177,19 +242,31 @@ function renderContenuti() {
     listaCoach.innerHTML = COACH.map(
       (c) => `
       <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-4">
-        <article class="card-coach p-4 text-center">
-          <div class="card-coach-foto pb-3">
-            <img src="${c.img}" alt="${c.alt}" class="foto-coach" loading="lazy" />
+        <div class="card-flip-container">
+          <div class="card-flipper">
+            <!-- FRONTE -->
+            <article class="card-front card-coach p-4 text-center d-flex flex-column justify-content-between">
+              <div>
+                <img src="${c.img}" alt="${c.alt}" class="img-fluid pb-3 foto-coach" loading="lazy" />
+                <h3 class="nome-coach pb-1">${c.nome}</h3>
+                <p class="ruolo-coach pb-2 mb-0">${c.ruolo}</p>
+              </div>
+              <button class="btn-flip btn-leggi w-100 mt-3 pt-2 pb-2">Leggi di più</button>
+            </article>
+
+            <!-- RETRO -->
+            <article class="card-back text-start d-flex flex-column p-0">
+              <div class="card-back-scrollable p-4 flex-grow-1" style="overflow-y: auto;">
+                <h3 class="nome-coach pb-1 text-center" style="font-size: 1.6rem">${c.nome}</h3>
+                <p class="ruolo-coach pb-3 mb-0 text-center" style="color:var(--primary); background: none;">${c.ruolo}</p>
+                <p class="bio-coach testo-chiaro mb-0" style="color: var(--testo-chiaro); font-size: 0.95rem;">${c.bio}</p>
+              </div>
+              <div class="p-3" style="border-top: 1px solid #333; background: var(--grigio-scuro);">
+                <button class="btn-flip-back bottone w-100 py-2" style="background:transparent; border: 1px solid var(--primary); color:var(--primary)">Indietro</button>
+              </div>
+            </article>
           </div>
-          <div class="card-coach-testo">
-            <h3 class="nome-coach pb-1">${c.nome}</h3>
-            <p class="ruolo-coach pb-2 mb-0">${c.ruolo}</p>
-            <p class="bio-coach testo-troncato mt-2 text-start">${c.bio}</p>
-            <button class="btn-leggi btn-mostra-prezzo text-white w-100 mt-3">
-              Leggi di più
-            </button>
-          </div>
-        </article>
+        </div>
       </div>`,
     ).join("");
   }

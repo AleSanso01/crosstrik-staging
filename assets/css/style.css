@@ -5,10 +5,15 @@
    ========================================= */
 
 :root {
-  --primary: #32C8E8;
+  --primary: #32c8e8;
   --secondary: darken(--primary, 15%);
 
-  --accent-lime: lighen(--primary, 15%); /* Accento lime: dettagli, PERFORMANCE, highlight */
+  --neon-blue: #00FFFF;
+
+  --accent-lime: lighen(
+    --primary,
+    15%
+  ); /* Accento lime: dettagli, PERFORMANCE, highlight */
 
   --details: #62defa; /* Ciano dettagli: hover e piccole linee decorative */
 
@@ -314,7 +319,6 @@ a:hover {
 
   display: inline-block;
 
-  box-shadow: 0 4px 15px rgba(198, 255, 0, 0.2);
 
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 
@@ -338,6 +342,9 @@ a:hover {
   margin-top: 15px;
 }
 
+.btn-flip-back {
+  box-shadow: 0 4px 15px var(--neon-blue);
+}
 /* =========================================
 
    SEZIONI GENERICHE E TITOLI
@@ -498,7 +505,10 @@ a:hover {
 
   margin-bottom: 10px;
 
-  box-shadow: 0 2px 10px rgba(198, 255, 0, 0.2);
+  box-shadow: 0 2px 10px var(--neon-blue);
+
+  justify-self: center;
+  display: flex;
 }
 
 .bio-coach {
@@ -784,6 +794,97 @@ a:hover {
   overflow: hidden;
 
   margin-bottom: 10px;
+}
+
+/* =========================================
+   CARDS 3D FLIP
+   ========================================= */
+.card-flip-container {
+  /* La prospettiva dà l'effetto 3D. Un numero più basso = 3D più estremo */
+  perspective: 1000px;
+  background-color: transparent;
+  height: 100%;
+  width: 100%;
+}
+
+.card-flipper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  /* Animazione più figa: usa un cubic-bezier elastico per un effetto "rimbalzo" morbido */
+  transition: transform 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-style: preserve-3d;
+}
+
+.card-flipper.is-flipped {
+  /* Rimossa la scale() che causava la rasterizzazione sgranata dei testi a fine animazione */
+  transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+  backface-visibility: hidden;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.card-front {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  /* Impedisce che il fronte diventi sgranato */
+  -webkit-font-smoothing: antialiased;
+}
+
+.card-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  /* translateZ(1px) forza il rendering pulito senza blur */
+  transform: rotateY(180deg) translateZ(1px);
+  background: var(--grigio-scuro);
+  border: 1px solid #222;
+  overflow: hidden; /* Scroll viene demandato al div interno */
+  -webkit-font-smoothing: antialiased;
+
+  /* Nascondiamo i click quando è sul retro, e li riattiviamo al flip */
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Gestione dei click (Z-Index dinamico): 
+   quando gira, il retro deve andare sopra e catturare click/scroll */
+.card-flipper.is-flipped .card-front {
+  pointer-events: none;
+  z-index: 1;
+}
+
+.card-flipper.is-flipped .card-back {
+  pointer-events: auto;
+  z-index: 3;
+}
+
+/* Container interno che gestisce lo scroll */
+.card-back-scrollable {
+  overflow-y: auto;
+  min-height: 0; /* Essenziale in Flexbox per non sforare l'altezza padre */
+  flex-grow: 1;
+}
+
+/* Stile per la scrollbar interna del retro */
+.card-back-scrollable::-webkit-scrollbar {
+  width: 6px;
+}
+.card-back-scrollable::-webkit-scrollbar-track {
+  background: transparent;
+}
+.card-back-scrollable::-webkit-scrollbar-thumb {
+  background-color: var(--primary);
+  border-radius: 10px;
 }
 
 .accordion-button {
