@@ -26,11 +26,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     // 2. Inizializzazione Google Translate
     inizializzaGoogleTranslate();
 
-    // 3. Setup Logica UI (Event Delegation)
+    // 3. Setup Logica UI (Event Delegation e Scroll Header)
     setupEventiGlobali();
-
-    // 4. Comportamento header (scroll: nascondi/mostra + logo full/light)
-    setupHeaderScroll();
 
     // 5. Render contenuti da fonte dati unica (data.js)
     renderContenuti();
@@ -120,64 +117,6 @@ function setupEventiGlobali() {
       prezzoBox.classList.remove("prezzo-nascosto");
     }
   });
-}
-
-// ==========================================
-// Comportamento Header allo scroll
-//  - Scende: l'header si nasconde
-//  - Sale: l'header riappare
-//  - Oltre una soglia: logo full -> logo light (versione compatta)
-// ==========================================
-function setupHeaderScroll() {
-  const header = document.getElementById("site-header");
-  if (!header) return;
-
-  // Tre step ben distinti (regola qui le soglie):
-  const SOGLIA_LOGO = 80; // Step 2: oltre -> logo light + header condensato (ancora visibile)
-  const SOGLIA_NASCONDI = 260; // Step 3: oltre, scendendo -> header scompare
-  const DELTA_DIREZIONE = 6; // px minimi di movimento per cambiare direzione (anti-jitter)
-
-  let ultimoScroll = window.scrollY || 0;
-
-  function aggiornaHeader() {
-    const y = window.scrollY || 0;
-    const delta = y - ultimoScroll;
-
-    // --- Logo full <-> light (in base alla posizione assoluta) ---
-    // Step 1 (in cima): niente classi -> logo full, header alto.
-    // Step 2 (oltre SOGLIA_LOGO): is-scrolled -> logo light, header condensato.
-    header.classList.toggle("is-scrolled", y > SOGLIA_LOGO);
-
-    // --- Nascondi/mostra (in base alla direzione) ---
-    if (Math.abs(delta) > DELTA_DIREZIONE) {
-      if (delta > 0 && y > SOGLIA_NASCONDI) {
-        // Step 3: scendendo oltre la soglia alta -> l'header scompare
-        header.classList.add("is-hidden");
-      } else if (delta < 0) {
-        // Salendo -> l'header riappare subito (con logo light)
-        header.classList.remove("is-hidden");
-      }
-      ultimoScroll = y <= 0 ? 0 : y;
-    }
-
-    // In cima alla pagina l'header è sempre visibile e intero
-    if (y <= SOGLIA_LOGO) {
-      header.classList.remove("is-hidden");
-    }
-  }
-
-  // requestAnimationFrame per performance (evita jank durante lo scroll)
-  let inAttesa = false;
-  window.addEventListener("scroll", function () {
-    if (inAttesa) return;
-    inAttesa = true;
-    window.requestAnimationFrame(function () {
-      aggiornaHeader();
-      inAttesa = false;
-    });
-  });
-
-  aggiornaHeader();
 }
 
 // ==========================================

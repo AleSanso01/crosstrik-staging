@@ -79,49 +79,28 @@ const CORSI = [
       ADATTO AI PRINCIPIANTI: ★★★★☆<br />`,
   },
   {
-    img: "assets/img/corsi/pilates.webp",
-    alt: "Pilates",
-    nome: "Pilates",
-    descrizione: `<strong>Forza, stabilità e controllo del core</strong><br /><br />
-      Il Pilates non è un semplice allenamento, ma un vero e proprio
-      appuntamento fisso con il tuo benessere. Attraverso movimenti
-      fluidi, controllati e precisi, questo metodo si concentra sul
-      rinforzo del core (la muscolatura profonda dell'addome e della
-      schiena), permettendoti di:<br /><br />
-      - Migliorare visibilmente la postura e l'allineamento della
-      colonna<br />
-      - Incrementare l'elasticità muscolare e la stabilità
-      articolare<br />
-      - Allentare le tensioni quotidiane e ridurre lo stress<br /><br />
-      È l'attività ideale per chi desidera lavorare sulla qualità
-      del movimento e sul controllo totale del proprio corpo. Le
-      sessioni combinano il lavoro a corpo libero (Matwork) con
-      l'utilizzo di piccoli attrezzi per variare l'intensità.<br /><br />
-      DIFFICOLTÀ: ★★☆☆☆<br />
-      INTENSITÀ: ★★☆☆☆<br />
-      ADATTO AI PRINCIPIANTI: ★★★★☆<br />`,
-  },
-  {
     img: "assets/img/corsi/crosstrik-kids.webp",
-    alt: "CrossTrik Kids",
-    nome: "CrossTrik Kids",
-    descrizione: `<strong>Crescita, movimento e divertimento per i più giovani</strong><br /><br />
-      Il CrossTrik Kids è il nostro corso dedicato a bambini e
-      ragazzi dai 6 ai 14 anni, strutturato per sviluppare le
-      capacità motorie in un ambiente sano, stimolante e inclusivo.
-      Attraverso giochi mirati, percorsi e circuiti di esercizi
-      funzionali adatti alla crescita, i ragazzi imparano a:<br /><br />
-      - Muoversi meglio, migliorando coordinazione, forza ed
-      equilibrio<br />
-      - Conoscere il proprio corpo e acquisire sicurezza nel
-      movimento<br />
-      - Collaborare con i compagni e rispettare le regole del
-      gruppo<br /><br />
-      La nostra filosofia: Qui l'obiettivo non è mai la prestazione
-      sportiva esasperata, ma la crescita motoria generale e il
-      piacere di vivere lo sport come un'esperienza positiva ed
-      educativa. (Nota per i genitori: i ragazzi vengono divisi in
-      gruppi di lavoro omogenei in base all'età).<br /><br />
+    alt: "CrossTrik Family",
+    nome: "CrossTrik Family",
+    descrizione: `<strong>Un nuovo modo di vivere l’allenamento in famiglia.</strong><br /><br />
+      CROSSTRIK Family permette a bambini e genitori di allenarsi nello stesso orario, seguendo due lezioni separate e adatte alle diverse esigenze.<br /><br />
+      Due gruppi, due coach, due percorsi dedicati.<br /><br />
+      <strong>Per i bambini</strong><br />
+      Attività motorie, giochi, circuiti ed esercizi pensati per sviluppare:<br /><br />
+      - Coordinazione<br />
+      - Equilibrio e agilità<br />
+      - Controllo del corpo<br />
+      - Collaborazione e rispetto delle regole<br />
+      - Fiducia nelle proprie capacità<br /><br />
+      <strong>Per i genitori</strong><br />
+      Un allenamento funzionale progressivo, seguito dal coach e adattabile al proprio livello, dedicato a:<br /><br />
+      - Forza e tono muscolare<br />
+      - Mobilità<br />
+      - Core e postura<br />
+      - Benessere generale<br />
+      - Continuità nell’allenamento<br /><br />
+      I bambini svolgono il loro corso con un coach dedicato, mentre mamme, papà o accompagnatori si allenano contemporaneamente in un gruppo separato.<br /><br />
+      Una soluzione pensata per rendere più semplice conciliare famiglia, tempo libero e attività fisica.<br /><br />
       DIFFICOLTÀ: ★★☆☆☆<br />
       INTENSITÀ: ★★★☆☆<br />
       ADATTO AI PRINCIPIANTI: ★★★★★<br />`,
