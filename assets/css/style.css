@@ -8,7 +8,7 @@
   --primary: #32c8e8;
   --secondary: darken(--primary, 15%);
 
-  --neon-blue: #00FFFF;
+  --neon-blue: #00ffff;
 
   --accent-lime: lighen(
     --primary,
@@ -97,7 +97,7 @@ a {
 
 a:hover {
   color: var(--details);
-  text-shadow: 0 0 8px rgba(204, 255, 0, 0.4);
+  text-shadow: 0 0 8px var(--details);
 }
 
 /* =========================================
@@ -165,7 +165,7 @@ a:hover {
 
 .link-evidenziato:hover {
   color: var(--details) !important;
-  text-shadow: 0 0 8px rgba(204, 255, 0, 0.4);
+  text-shadow: 0 0 8px rgb(0, 217, 255);
 }
 
 .navbar-toggler:focus {
@@ -319,7 +319,6 @@ a:hover {
 
   display: inline-block;
 
-
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 
   cursor: pointer;
@@ -329,7 +328,7 @@ a:hover {
 .btn-leggi:hover {
   transform: translateY(-3px);
 
-  box-shadow: 0 8px 25px rgba(198, 255, 0, 0.4);
+  box-shadow: 0 8px 25px var(--details);
 
   background: linear-gradient(135deg, #930cd2, var(--primary));
 }
@@ -614,13 +613,13 @@ a:hover {
   background: linear-gradient(145deg, #111111 0%, var(--grigio-scuro) 100%);
   transform: scale(1.05);
   z-index: 2;
-  box-shadow: 0 15px 40px rgba(198, 255, 0, 0.15);
+  box-shadow: 0 15px 40px rgba(0, 255, 242, 0.3);
 }
 
 .piano-premium:hover {
   transform: scale(1.05) translateY(-8px);
   border-color: var(--secondary);
-  box-shadow: 0 20px 50px rgba(198, 255, 0, 0.3);
+  box-shadow: 0 20px 50px rgba(0, 255, 242, 0.3);
 }
 
 /* =========================================
@@ -631,37 +630,14 @@ a:hover {
 .piano-performance {
   border: 2px solid var(--accent-lime);
   border-top-width: 3px;
-  box-shadow: 0 10px 30px rgba(204, 255, 0, 0.12);
+  box-shadow: 0 10px 30px var(--details);
 }
 
 .piano-performance:hover {
   border-color: var(--accent-lime);
-  box-shadow: 0 18px 45px rgba(204, 255, 0, 0.28);
+  box-shadow: 0 18px 45px var(--details);
 }
 
-.piano-performance .nome-piano {
-  color: var(--accent-lime);
-  text-shadow: 0 0 18px rgba(204, 255, 0, 0.35);
-}
-
-.piano-performance .prezzo-grande {
-  color: var(--accent-lime);
-}
-
-.piano-performance .btn-mostra-prezzo:hover {
-  border-color: var(--accent-lime);
-  color: var(--accent-lime);
-}
-
-.piano-performance .bottone-outline {
-  border-color: var(--accent-lime);
-  color: var(--accent-lime) !important;
-}
-
-.piano-performance .bottone-outline:hover {
-  background: var(--accent-lime);
-  color: var(--nero-crosstrik) !important;
-}
 
 /* -----------------------------------------
    UTILITY LIME (spargi il dettaglio dove vuoi per testare)
@@ -675,7 +651,7 @@ a:hover {
 }
 
 .glow-accent {
-  box-shadow: 0 0 25px rgba(204, 255, 0, 0.35);
+  box-shadow: 0 0 25px var(--details);
 }
 
 /* Badge "Più Scelto" */
@@ -693,7 +669,7 @@ a:hover {
   border-radius: 20px;
   font-size: 0.9rem;
   z-index: 3;
-  box-shadow: 0 4px 10px rgba(198, 255, 0, 0.3);
+  box-shadow: 0 4px 10px var(--details);
 }
 
 /* =========================================
@@ -1282,4 +1258,88 @@ body {
   .cta-sticky-btn {
     width: fit-content;
   }
+}
+
+/* =========================================
+   STILI ESTRATTI DA NOVITA.HTML
+   ========================================= */
+
+.sezione-desc-sede {
+  max-width: 700px;
+  margin: 0 auto;
+  font-size: 1.1rem;
+}
+
+.feature-valore {
+  font-family: "Oswald", sans-serif;
+  font-size: 3rem;
+  color: var(--primary);
+  margin-bottom: 5px;
+}
+
+.feature-titolo {
+  font-family: "Oswald", sans-serif;
+  letter-spacing: 1px;
+}
+
+.feature-icona-emoji {
+  font-size: 3rem;
+  margin-bottom: 5px;
+}
+
+.barbell-box {
+  background: var(--grigio-scuro);
+  border: 1px solid #333;
+}
+
+.masterclass-badge {
+  letter-spacing: 2px;
+  font-size: 0.9rem;
+}
+
+.barbell-titolo {
+  font-size: 3rem;
+}
+
+.barbell-testo {
+  line-height: 1.6;
+}
+
+.barbell-lista {
+  line-height: 1.8;
+}
+
+.barbell-img-wrapper {
+  position: relative;
+  width: 100%;
+  padding-bottom: 80%;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.barbell-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: contrast(1.1) brightness(0.8);
+}
+
+.founder-desc {
+  max-width: 800px;
+  font-size: 1.1rem;
+}
+
+.membership-label {
+  letter-spacing: 1px;
+}
+
+.card-mt-15 {
+  margin-top: 15px;
+}
+
+.timeline-last {
+  margin-bottom: 0;
 }

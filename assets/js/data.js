@@ -79,7 +79,7 @@ const CORSI = [
       ADATTO AI PRINCIPIANTI: ★★★★☆<br />`,
   },
   {
-    img: "assets/img/corsi/crosstrik-kids.webp",
+    img: "assets/img/corsi/crosstrik-family.webp",
     alt: "CrossTrik Family",
     nome: "CrossTrik Family",
     descrizione: `<strong>Un nuovo modo di vivere l’allenamento in famiglia.</strong><br /><br />

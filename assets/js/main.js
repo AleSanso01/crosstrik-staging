@@ -322,11 +322,11 @@ function avviaSliderContenuti() {
 function avviaSliderLoghi() {
   const loghiCollaboratori = [
     "background.png",
-    "crosstrik_kids.png",
+    "crosstrik_family.png",
     "logevity.png",
     "pilates.png",
     "background.png",
-    "crosstrik_kids.png",
+    "crosstrik_family.png",
     "logevity.png",
     "pilates.png",
   ];
