@@ -179,7 +179,7 @@ function renderContenuti() {
             <!-- FRONTE -->
             <article class="card-front card-coach card-slider p-4 text-center d-flex flex-column justify-content-between">
               <div>
-                <img src="${c.img}" alt="${c.alt}" class="img-fluid pb-3 foto-coach" loading="lazy" />
+                <img src="${c.img}" alt="${c.alt}" class="img-fluid mb-3 foto-coach" loading="lazy" />
                 <h3 class="nome-coach mb-3">${c.nome}</h3>
                 <p class="ruolo-coach mb-3">${c.ruolo}</p>
               </div>
@@ -277,59 +277,50 @@ function renderContenuti() {
 //  - orizzontali, paginazione a bullet automatica, autoplay
 // ==========================================
 function avviaSliderContenuti() {
-  if (typeof Swiper === "undefined") return;
+  if (typeof Swiper === "undefined") return;
 
-  const opzioniBase = {
-    slidesPerView: 1,
-    spaceBetween: 24,
-    grabCursor: true,
-    loop: true,
-    autoplay: {
-      delay: 3500,
-      disableOnInteraction: false,
-    },
-    pagination: {
-      el: ".swiper-corsi .swiper-pagination",
-      clickable: true,
-      dynamicBullets: true,
-    },
-    breakpoints: {
-      576: { slidesPerView: 2 },
-      992: { slidesPerView: 3 },
-      1200: { slidesPerView: 4 },
-    },
-  };
+  const opzioniBase = {
+    slidesPerView: 1,
+    spaceBetween: 24,
+    grabCursor: true,
+    loop: true,
+    autoplay: {
+      delay: 3500,
+      disableOnInteraction: false,
+    },
+    pagination: {
+      el: ".swiper-corsi .swiper-pagination",
+      clickable: true,
+      dynamicBullets: true,
+    },
+    breakpoints: {
+      576: { slidesPerView: 2 },
+      992: { slidesPerView: 3 },
+      1200: { slidesPerView: 4 },
+    },
+  };
 
-  if (document.querySelector(".swiper-corsi")) {
-    new Swiper(".swiper-corsi", opzioniBase);
-  }
+  if (document.querySelector(".swiper-corsi")) {
+    new Swiper(".swiper-corsi", opzioniBase);
+  }
 
-  if (document.querySelector(".swiper-coach")) {
-    new Swiper(".swiper-coach", {
-      ...opzioniBase,
-      pagination: {
-        el: ".swiper-coach .swiper-pagination",
-        clickable: true,
-        dynamicBullets: true,
-      },
-    });
-  }
+  if (document.querySelector(".swiper-coach")) {
+    new Swiper(".swiper-coach", {
+      ...opzioniBase,
+      pagination: {
+        el: ".swiper-coach .swiper-pagination",
+        clickable: true,
+        dynamicBullets: true,
+      },
+    });
+  }
 }
 
 // ==========================================
 // Slider loghi collaborazioni (nel footer)
 // ==========================================
 function avviaSliderLoghi() {
-  const loghiCollaboratori = [
-    "background.png",
-    "crosstrik_family.png",
-    "logevity.png",
-    "pilates.png",
-    "background.png",
-    "crosstrik_family.png",
-    "logevity.png",
-    "pilates.png",
-  ];
+  const loghiCollaboratori = ["gensan.jpg", "magna_e_spigni.jpg","gensan.jpg", "magna_e_spigni.jpg","gensan.jpg", "magna_e_spigni.jpg","gensan.jpg", "magna_e_spigni.jpg","gensan.jpg", "magna_e_spigni.jpg",];
 
   const wrapper = document.getElementById("loghi-wrapper");
   if (!wrapper) return;
