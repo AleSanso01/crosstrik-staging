@@ -11,13 +11,15 @@
 
   <title>Crosstrik | Abbonamenti, Orari e Info</title>
   <meta name="description" content="Scopri i prezzi degli abbonamenti, gli orari dei corsi e prenota la tua lezione di prova da Crosstrik. Preparati a sudare con il nostro team a Cavriglia!" />
-      <link rel="icon" type="image/png" href="assets/img/logo_light.png" />
+      <link rel="icon" type="image/svg+xml" href="assets/img/logo_full.svg" />
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
 
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@500;700&family=Roboto:wght@300;400;700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/style.min.css" />
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
@@ -71,19 +73,216 @@
               <h2 class="titolo-sezione">I Nostri Orari</h2>
             </div>
           </div>
-          <div class="row justify-content-center">
-            <div class="col-12 col-md-8 box-orari">
-              <h3 class="titolo-box pb-3 text-center">Tabella Oraria</h3>
-              <div class="immagine-orari pb-3 text-center">
-                <iframe
-                  width="100%"
-                  height="600"
-                  src="https://golee.it/clubs/crosstrik/calendar?widget=true"
-                  loading="lazy"
-                  frameborder="1"
-                  title="Calendario"
-                ></iframe>
-              </div>
+          <!--
+            Tabella oraria statica: un solo markup per desktop e mobile.
+            - Desktop (>=768px): griglia orario x giorni. Ogni fascia oraria
+              (.orari-slot, una o più lezioni che iniziano insieme) si posiziona
+              sulla riga del suo orario tramite --r (1 = 06:00 ... 11 = 21:00).
+            - Mobile: ogni giorno diventa una card con l'elenco delle lezioni.
+            Durata lezioni: 1h. Colore del corso: classe lezione--<corso>.
+          -->
+          <div class="orari-wrap">
+            <form class="orari-filtro" aria-label="Filtra per corso">
+              <label class="lezione--openbox"><input type="checkbox" name="corso" value="openbox" /> Open Box</label>
+              <label class="lezione--longevity"><input type="checkbox" name="corso" value="longevity" /> Longevity</label>
+              <label class="lezione--crosstrik"><input type="checkbox" name="corso" value="crosstrik" /> Crosstrik</label>
+              <label class="lezione--barbell"><input type="checkbox" name="corso" value="barbell" /> Barbell</label>
+              <label class="lezione--ramping"><input type="checkbox" name="corso" value="ramping" /> Ramping</label>
+              <label class="lezione--family"><input type="checkbox" name="corso" value="family" /> Family</label>
+              <label class="lezione--yoga"><input type="checkbox" name="corso" value="yoga" /> Yoga</label>
+              <button type="reset" class="orari-filtro-reset" hidden>Mostra tutti</button>
+            </form>
+
+            <div class="orari-board">
+              <ol class="orari-ore" aria-hidden="true">
+                <li style="--r: 1">06:00</li>
+                <li style="--r: 2">10:00</li>
+                <li style="--r: 3">16:00</li>
+                <li style="--r: 4">17:30</li>
+                <li style="--r: 5">18:00</li>
+                <li style="--r: 6">18:30</li>
+                <li style="--r: 7">19:00</li>
+                <li style="--r: 8">19:30</li>
+                <li style="--r: 9">20:00</li>
+                <li style="--r: 10">20:30</li>
+                <li style="--r: 11">21:00</li>
+              </ol>
+
+              <article class="orari-giorno" style="--c: 2">
+                <h3 class="orari-giorno-nome">Lunedì</h3>
+                <ul class="orari-lezioni">
+                  <li class="orari-slot" style="--r: 1">
+                    <div class="lezione lezione--openbox" data-corso="openbox"><span class="lezione-ora"><time>06:00</time>–<time>07:00</time></span> <span class="lezione-nome">Open Box</span></div>
+                  </li>
+                  <li class="orari-slot" style="--r: 2">
+                    <div class="lezione lezione--longevity" data-corso="longevity"><span class="lezione-ora"><time>10:00</time>–<time>11:00</time></span> <span class="lezione-nome">Longevity</span></div>
+                  </li>
+                  <li class="orari-slot" style="--r: 5">
+                    <div class="lezione lezione--barbell" data-corso="barbell"><span class="lezione-ora"><time>18:00</time>–<time>19:00</time></span> <span class="lezione-nome">Barbell</span></div>
+                    <div class="lezione lezione--crosstrik" data-corso="crosstrik"><span class="lezione-ora"><time>18:00</time>–<time>19:00</time></span> <span class="lezione-nome">Crosstrik</span></div>
+                  </li>
+                  <li class="orari-slot" style="--r: 7">
+                    <div class="lezione lezione--barbell" data-corso="barbell"><span class="lezione-ora"><time>19:00</time>–<time>20:00</time></span> <span class="lezione-nome">Barbell</span></div>
+                    <div class="lezione lezione--crosstrik" data-corso="crosstrik"><span class="lezione-ora"><time>19:00</time>–<time>20:00</time></span> <span class="lezione-nome">Crosstrik</span></div>
+                  </li>
+                  <li class="orari-slot" style="--r: 9">
+                    <div class="lezione lezione--barbell" data-corso="barbell"><span class="lezione-ora"><time>20:00</time>–<time>21:00</time></span> <span class="lezione-nome">Barbell</span></div>
+                    <div class="lezione lezione--crosstrik" data-corso="crosstrik"><span class="lezione-ora"><time>20:00</time>–<time>21:00</time></span> <span class="lezione-nome">Crosstrik</span></div>
+                  </li>
+                  <li class="orari-slot" style="--r: 11">
+                    <div class="lezione lezione--yoga" data-corso="yoga"><span class="lezione-ora"><time>21:00</time>–<time>22:00</time></span> <span class="lezione-nome">Yoga</span></div>
+                  </li>
+                </ul>
+              </article>
+
+              <article class="orari-giorno" style="--c: 3">
+                <h3 class="orari-giorno-nome">Martedì</h3>
+                <ul class="orari-lezioni">
+                  <li class="orari-slot" style="--r: 1">
+                    <div class="lezione lezione--openbox" data-corso="openbox"><span class="lezione-ora"><time>06:00</time>–<time>07:00</time></span> <span class="lezione-nome">Open Box</span></div>
+                  </li>
+                  <li class="orari-slot" style="--r: 4">
+                    <div class="lezione lezione--family" data-corso="family"><span class="lezione-ora"><time>17:30</time>–<time>18:30</time></span> <span class="lezione-nome">Family</span></div>
+                  </li>
+                  <li class="orari-slot" style="--r: 5">
+                    <div class="lezione lezione--barbell" data-corso="barbell"><span class="lezione-ora"><time>18:00</time>–<time>19:00</time></span> <span class="lezione-nome">Barbell</span></div>
+                  </li>
+                  <li class="orari-slot" style="--r: 6">
+                    <div class="lezione lezione--ramping" data-corso="ramping"><span class="lezione-ora"><time>18:30</time>–<time>19:30</time></span> <span class="lezione-nome">Ramping</span></div>
+                  </li>
+                  <li class="orari-slot" style="--r: 7">
+                    <div class="lezione lezione--barbell" data-corso="barbell"><span class="lezione-ora"><time>19:00</time>–<time>20:00</time></span> <span class="lezione-nome">Barbell</span></div>
+                  </li>
+                  <li class="orari-slot" style="--r: 8">
+                    <div class="lezione lezione--crosstrik" data-corso="crosstrik"><span class="lezione-ora"><time>19:30</time>–<time>20:30</time></span> <span class="lezione-nome">Crosstrik</span></div>
+                  </li>
+                  <li class="orari-slot" style="--r: 9">
+                    <div class="lezione lezione--barbell" data-corso="barbell"><span class="lezione-ora"><time>20:00</time>–<time>21:00</time></span> <span class="lezione-nome">Barbell</span></div>
+                  </li>
+                  <li class="orari-slot" style="--r: 10">
+                    <div class="lezione lezione--crosstrik" data-corso="crosstrik"><span class="lezione-ora"><time>20:30</time>–<time>21:30</time></span> <span class="lezione-nome">Crosstrik</span></div>
+                  </li>
+                </ul>
+              </article>
+
+              <article class="orari-giorno" style="--c: 4">
+                <h3 class="orari-giorno-nome">Mercoledì</h3>
+                <ul class="orari-lezioni">
+                  <li class="orari-slot" style="--r: 1">
+                    <div class="lezione lezione--openbox" data-corso="openbox"><span class="lezione-ora"><time>06:00</time>–<time>07:00</time></span> <span class="lezione-nome">Open Box</span></div>
+                  </li>
+                  <li class="orari-slot" style="--r: 2">
+                    <div class="lezione lezione--longevity" data-corso="longevity"><span class="lezione-ora"><time>10:00</time>–<time>11:00</time></span> <span class="lezione-nome">Longevity</span></div>
+                  </li>
+                  <li class="orari-slot" style="--r: 4">
+                    <div class="lezione lezione--ramping" data-corso="ramping"><span class="lezione-ora"><time>17:30</time>–<time>18:30</time></span> <span class="lezione-nome">Ramping</span></div>
+                  </li>
+                  <li class="orari-slot" style="--r: 5">
+                    <div class="lezione lezione--barbell" data-corso="barbell"><span class="lezione-ora"><time>18:00</time>–<time>19:00</time></span> <span class="lezione-nome">Barbell</span></div>
+                  </li>
+                  <li class="orari-slot" style="--r: 6">
+                    <div class="lezione lezione--crosstrik" data-corso="crosstrik"><span class="lezione-ora"><time>18:30</time>–<time>19:30</time></span> <span class="lezione-nome">Crosstrik</span></div>
+                  </li>
+                  <li class="orari-slot" style="--r: 7">
+                    <div class="lezione lezione--barbell" data-corso="barbell"><span class="lezione-ora"><time>19:00</time>–<time>20:00</time></span> <span class="lezione-nome">Barbell</span></div>
+                  </li>
+                  <li class="orari-slot" style="--r: 8">
+                    <div class="lezione lezione--crosstrik" data-corso="crosstrik"><span class="lezione-ora"><time>19:30</time>–<time>20:30</time></span> <span class="lezione-nome">Crosstrik</span></div>
+                  </li>
+                  <li class="orari-slot" style="--r: 9">
+                    <div class="lezione lezione--barbell" data-corso="barbell"><span class="lezione-ora"><time>20:00</time>–<time>21:00</time></span> <span class="lezione-nome">Barbell</span></div>
+                  </li>
+                  <li class="orari-slot" style="--r: 11">
+                    <div class="lezione lezione--yoga" data-corso="yoga"><span class="lezione-ora"><time>21:00</time>–<time>22:00</time></span> <span class="lezione-nome">Yoga</span></div>
+                  </li>
+                </ul>
+              </article>
+
+              <article class="orari-giorno" style="--c: 5">
+                <h3 class="orari-giorno-nome">Giovedì</h3>
+                <ul class="orari-lezioni">
+                  <li class="orari-slot" style="--r: 1">
+                    <div class="lezione lezione--openbox" data-corso="openbox"><span class="lezione-ora"><time>06:00</time>–<time>07:00</time></span> <span class="lezione-nome">Open Box</span></div>
+                  </li>
+                  <li class="orari-slot" style="--r: 3">
+                    <div class="lezione lezione--yoga" data-corso="yoga"><span class="lezione-ora"><time>16:00</time>–<time>17:00</time></span> <span class="lezione-nome">Yoga</span></div>
+                  </li>
+                  <li class="orari-slot" style="--r: 4">
+                    <div class="lezione lezione--family" data-corso="family"><span class="lezione-ora"><time>17:30</time>–<time>18:30</time></span> <span class="lezione-nome">Family</span></div>
+                  </li>
+                  <li class="orari-slot" style="--r: 5">
+                    <div class="lezione lezione--barbell" data-corso="barbell"><span class="lezione-ora"><time>18:00</time>–<time>19:00</time></span> <span class="lezione-nome">Barbell</span></div>
+                  </li>
+                  <li class="orari-slot" style="--r: 6">
+                    <div class="lezione lezione--ramping" data-corso="ramping"><span class="lezione-ora"><time>18:30</time>–<time>19:30</time></span> <span class="lezione-nome">Ramping</span></div>
+                  </li>
+                  <li class="orari-slot" style="--r: 7">
+                    <div class="lezione lezione--barbell" data-corso="barbell"><span class="lezione-ora"><time>19:00</time>–<time>20:00</time></span> <span class="lezione-nome">Barbell</span></div>
+                  </li>
+                  <li class="orari-slot" style="--r: 8">
+                    <div class="lezione lezione--crosstrik" data-corso="crosstrik"><span class="lezione-ora"><time>19:30</time>–<time>20:30</time></span> <span class="lezione-nome">Crosstrik</span></div>
+                  </li>
+                  <li class="orari-slot" style="--r: 9">
+                    <div class="lezione lezione--barbell" data-corso="barbell"><span class="lezione-ora"><time>20:00</time>–<time>21:00</time></span> <span class="lezione-nome">Barbell</span></div>
+                  </li>
+                  <li class="orari-slot" style="--r: 10">
+                    <div class="lezione lezione--crosstrik" data-corso="crosstrik"><span class="lezione-ora"><time>20:30</time>–<time>21:30</time></span> <span class="lezione-nome">Crosstrik</span></div>
+                  </li>
+                </ul>
+              </article>
+
+              <article class="orari-giorno" style="--c: 6">
+                <h3 class="orari-giorno-nome">Venerdì</h3>
+                <ul class="orari-lezioni">
+                  <li class="orari-slot" style="--r: 1">
+                    <div class="lezione lezione--openbox" data-corso="openbox"><span class="lezione-ora"><time>06:00</time>–<time>07:00</time></span> <span class="lezione-nome">Open Box</span></div>
+                  </li>
+                  <li class="orari-slot" style="--r: 2">
+                    <div class="lezione lezione--longevity" data-corso="longevity"><span class="lezione-ora"><time>10:00</time>–<time>11:00</time></span> <span class="lezione-nome">Longevity</span></div>
+                  </li>
+                  <li class="orari-slot" style="--r: 5">
+                    <div class="lezione lezione--barbell" data-corso="barbell"><span class="lezione-ora"><time>18:00</time>–<time>19:00</time></span> <span class="lezione-nome">Barbell</span></div>
+                  </li>
+                  <li class="orari-slot" style="--r: 6">
+                    <div class="lezione lezione--crosstrik" data-corso="crosstrik"><span class="lezione-ora"><time>18:30</time>–<time>19:30</time></span> <span class="lezione-nome">Crosstrik</span></div>
+                  </li>
+                  <li class="orari-slot" style="--r: 7">
+                    <div class="lezione lezione--barbell" data-corso="barbell"><span class="lezione-ora"><time>19:00</time>–<time>20:00</time></span> <span class="lezione-nome">Barbell</span></div>
+                  </li>
+                  <li class="orari-slot" style="--r: 8">
+                    <div class="lezione lezione--crosstrik" data-corso="crosstrik"><span class="lezione-ora"><time>19:30</time>–<time>20:30</time></span> <span class="lezione-nome">Crosstrik</span></div>
+                  </li>
+                  <li class="orari-slot" style="--r: 9">
+                    <div class="lezione lezione--barbell" data-corso="barbell"><span class="lezione-ora"><time>20:00</time>–<time>21:00</time></span> <span class="lezione-nome">Barbell</span></div>
+                  </li>
+                  <li class="orari-slot" style="--r: 10">
+                    <div class="lezione lezione--crosstrik" data-corso="crosstrik"><span class="lezione-ora"><time>20:30</time>–<time>21:30</time></span> <span class="lezione-nome">Crosstrik</span></div>
+                  </li>
+                </ul>
+              </article>
+
+              <article class="orari-giorno" style="--c: 7">
+                <h3 class="orari-giorno-nome">Sabato</h3>
+                <ul class="orari-lezioni">
+                  <li class="orari-slot" style="--r: 2">
+                    <div class="lezione lezione--openbox" data-corso="openbox"><span class="lezione-ora"><time>10:00</time>–<time>11:00</time></span> <span class="lezione-nome">Open Box</span></div>
+                  </li>
+                </ul>
+              </article>
+
+            </div>
+
+            <p class="orari-note">
+              Tutte le lezioni durano 1 ora · Domenica chiuso
+            </p>
+            <div class="text-center">
+              <a
+                href="https://golee.it/clubs/crosstrik/calendar"
+                class="bottone"
+                target="_blank"
+                rel="noopener"
+                >Prenota su Golee</a
+              >
             </div>
           </div>
         </section>
@@ -93,7 +292,7 @@
 
         <!-- TARIFFE E ABBONAMENTI -->
 
-      <section id="tariffe" class="sezione-custom py-5 bg-light rounded-4">
+      <section id="tariffe" class="sezione-custom py-5 rounded-4">
 
         <div class="container">
 
@@ -182,7 +381,7 @@
 <!-- Ingressi Singoli -->
 <div class="row align-items-stretch justify-content-center mt-3 pt-3 border-top border-secondary">
   <div class="col-12 text-center pb-4">
-    <h3 class="text-black">Ingressi Singoli</h3>
+    <h3>Ingressi Singoli</h3>
   </div>
   <div class="col-12 col-md-6 col-xl-4 mb-4">
     <div class="card-prezzo p-4 text-center h-100 d-flex flex-column">
@@ -414,6 +613,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script src="assets/js/main.js"></script>
+    <script src="assets/js/orari.js"></script>
 
   </body>
 
