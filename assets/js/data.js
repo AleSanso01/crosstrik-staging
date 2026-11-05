@@ -157,55 +157,52 @@ const CORSI = [
 
 const COACH = [
   {
-    img: "assets/img/mauro.png",
+    img: "assets/img/mauro.JPEG",
     alt: "Mauro, Head Coach della palestra Crosstrik",
     nome: "Mauro",
     ruolo: "Head Coach",
-    bio: `L'anima e la guida di Crosstrik. Da anni punto di
-      riferimento nel territorio per il functional training, la
-      sua missione è trasmettere la disciplina del fitness,
-      motivare ogni singola persona e mantenere unito e forte il
-      nostro grande gruppo.`,
+    bio: `La guida tecnica di CROSSTRIK. Mauro unisce esperienza, passione e programmazione per aiutare ogni atleta a migliorare, qualunque sia il suo livello. Tecnica, intensità e spirito di squadra: tre elementi che porta in ogni allenamento.`,
   },
   {
-    img: "assets/img/davide.png",
+    img: "assets/img/davide.JPEG",
     alt: "Davide, Coach",
     nome: "Davide",
     ruolo: "Coach",
-    bio: `Attento e determinato, la sua dedizione per l'allenamento ti
-      spingerà sempre oltre i tuoi limiti con la giusta carica. Ti
-      seguirà in modo pignolo per assicurare l'esecuzione
-      impeccabile di ogni movimento.`,
+    bio: `Determinazione e cura dei dettagli sono il suo punto di forza. Davide ti guiderà con energia e precisione, aiutandoti a migliorare tecnica, forza e sicurezza nei movimenti. Un coach esigente al punto giusto, sempre pronto a farti dare qualcosa in più.`,
   },
   {
-    img: "assets/img/maya.png",
+    img: "assets/img/maya.JPEG",
     alt: "Maya, Coach alla Crosstrik",
     nome: "Maya",
     ruolo: "Coach",
-    bio: `Dinamicita' ed esplosivita' al tuo servizio. Con un occhio
-      di riguardo alla tecnica e un sorriso contagioso, sarà lì
-      per aiutarti ad alleggerire il carico quando serve o
-      incitarti all'ultima ripetizione.`,
-  },
+    bio: `Dinamica, energica e coinvolgente. Maya porta in ogni allenamento entusiasmo e attenzione alla tecnica, sapendo quando alleggerire il carico e quando chiederti quella ripetizione in più. Con lei, impegno e divertimento vanno sempre di pari passo.`},
   {
-    img: "assets/img/gloria.png",
-    alt: "Gloria, Coach",
-    nome: "Gloria",
+    img: "assets/img/Paola.JPEG",
+    alt: "Paola, Coach",
+    nome: "Paola",
     ruolo: "Coach",
-    bio: `L'energia dirompente necessaria per non mollare:
-      sollevamenti potenti e pura tecnica. Una coach pronta a
-      trascinarti anche nelle giornate più difficili con la sua
-      determinazione.`,
+    bio: `Determinazione ed esperienza per dimostrare che allenarsi non ha età. Con il Longevity Fitness, Paola ti guida in un percorso dedicato a forza, mobilità ed equilibrio, per affrontare ogni giorno con più energia, sicurezza e autonomia.`,
   },
   {
-    img: "assets/img/corsi/yoga.webp",
+    img: "assets/img/niki.JPEG",
     alt: "Niki, Insegnante di Yoga",
     nome: "Niki",
     ruolo: "Insegnante Yoga",
-    bio: `La nostra guida verso la concentrazione interiore. Niki si
-      occuperà di rimettervi a nuovo, insegnandovi l'importanza
-      della flessibilità e del recupero, per completare al 100% il
-      vostro piano atletico.`,
+    bio: `Il giusto equilibrio tra forza e consapevolezza. Con Niki lo Yoga diventa un percorso per migliorare mobilità, flessibilità e controllo del corpo, imparando a respirare, recuperare e muoversi meglio. Un complemento ideale all’allenamento e uno spazio dedicato al proprio benessere.`,
+  },
+  {
+    img: "assets/img/chiara.JPEG",
+    alt: "Chiara, Coach",
+    nome: "Chiara",
+    ruolo: "Coach",
+    bio: `Chiara è una delle nuove energie del team CROSSTRIK. Coach dei corsi Ramping e Family, ti guiderà in allenamenti dinamici e accessibili, aiutandoti a migliorare forza, mobilità e sicurezza nei movimenti, senza dimenticare il divertimento.`,
+  },
+  {
+    img: "assets/img/gloria.JPEG",
+    alt: "Gloria, coach",
+    nome: "Gloria",
+    ruolo: "Coach",
+    bio: `Esperienza, energia e attenzione alla persona. Gloria mette la sua esperienza al servizio dei corsi Ramping e Family, guidando ogni allenamento con competenza e capacità di adattare il lavoro alle esigenze di adulti e ragazzi. Un punto di riferimento per allenarsi in modo efficace, sicuro e coinvolgente.`,
   },
   {
     img: "assets/img/carlotta-beccai.jpeg",
