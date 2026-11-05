@@ -1294,3 +1294,296 @@ body {
   }
 }
 
+/* =========================================
+   TABELLA ORARI STATICA (info.html#orari)
+   Un solo markup per tutti i dispositivi:
+   - Mobile (default): una card per giorno
+   - Desktop (>=768px): griglia orario x giorni con CSS subgrid.
+     Ogni giorno occupa la colonna --c, ogni lezione la riga --r.
+   Per aggiungere un corso: nuova classe .lezione--<corso> con --c-corso.
+   ========================================= */
+
+.orari-wrap {
+  --orari-accent: #2cc6e3;
+  --orari-bg: #101214;
+  --orari-bg-alt: #161a1d;
+  --orari-linea: #262b30;
+  font-family: "Inter", "Roboto", sans-serif;
+}
+
+/* Colori dei corsi */
+.lezione--barbell { --c-corso: #a9b4c2; }
+.lezione--crosstrik { --c-corso: #c08bff; }
+.lezione--ramping { --c-corso: #7c96ff; }
+.lezione--family { --c-corso: #45e0c4; }
+.lezione--yoga { --c-corso: #ff6b81; }
+.lezione--longevity { --c-corso: #ffd166; }
+.lezione--openbox { --c-corso: #ff9f5a; }
+
+/* Legenda + filtro: ogni chip è una checkbox (gestita da assets/js/orari.js) */
+.orari-filtro {
+  margin: 0 0 24px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  font-size: 0.9rem;
+}
+
+.orari-filtro label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 6px 14px;
+  border: 1px solid var(--orari-linea);
+  border-radius: 999px;
+  color: var(--testo-grigio);
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+}
+
+.orari-filtro label::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--c-corso);
+}
+
+/* Checkbox nascosta alla vista ma raggiungibile da tastiera e screen reader */
+.orari-filtro input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.orari-filtro label:hover {
+  border-color: var(--c-corso);
+}
+
+.orari-filtro label:has(input:focus-visible) {
+  outline: 2px solid var(--orari-accent);
+  outline-offset: 2px;
+}
+
+.orari-filtro label:has(input:checked) {
+  color: var(--testo-chiaro);
+  border-color: var(--c-corso);
+  background: color-mix(in srgb, var(--c-corso) 20%, transparent);
+}
+
+/* Filtro attivo: i corsi non selezionati si attenuano */
+.orari-filtro.is-attivo label:not(:has(input:checked)) {
+  opacity: 0.5;
+}
+
+.orari-filtro-reset {
+  min-height: 36px;
+  padding: 6px 14px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: var(--orari-accent);
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+/* Elementi nascosti dal filtro (display:flex/grid altrimenti vincerebbe su [hidden]) */
+.lezione[hidden],
+.orari-slot.is-vuoto {
+  display: none;
+}
+
+/* Su mobile spariscono anche le card dei giorni rimasti vuoti;
+   su desktop la colonna resta, così la griglia non si deforma */
+@media (max-width: 767.98px) {
+  .orari-giorno.is-vuoto {
+    display: none;
+  }
+}
+
+/* --- MOBILE: card per giorno --- */
+.orari-board {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.orari-ore {
+  display: none;
+}
+
+.orari-giorno {
+  background: var(--orari-bg);
+  border: 1px solid var(--orari-linea);
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: var(--shadow-float);
+}
+
+.orari-giorno-nome {
+  font-family: "Oswald", sans-serif;
+  font-size: 1.25rem;
+  letter-spacing: 1px;
+  color: var(--orari-accent);
+  margin: 0 0 12px;
+}
+
+.orari-lezioni {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Fascia oraria: raggruppa le lezioni che iniziano alla stessa ora */
+.orari-slot {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.lezione {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border-left: 3px solid var(--c-corso);
+  background: color-mix(in srgb, var(--c-corso) 12%, transparent);
+}
+
+.lezione-ora {
+  font-family: "Oswald", sans-serif;
+  font-size: 0.95rem;
+  min-width: 5.6rem; /* allinea i nomi: Oswald non ha cifre a larghezza fissa */
+  color: var(--testo-chiaro);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.lezione-nome {
+  font-weight: 600;
+  color: var(--c-corso);
+}
+
+.orari-note {
+  text-align: center;
+  color: var(--testo-grigio);
+  font-size: 0.9rem;
+  margin: 24px 0 20px;
+}
+
+/* --- DESKTOP: griglia orario x giorni --- */
+@media (min-width: 768px) {
+  .orari-board {
+    display: grid;
+    grid-template-columns: 3.5rem repeat(6, minmax(0, 1fr));
+    grid-template-rows: auto repeat(11, minmax(3.5rem, auto));
+    column-gap: 8px;
+    background: var(--orari-bg);
+    border: 1px solid var(--orari-linea);
+    border-radius: 15px;
+    padding: 16px;
+    box-shadow: var(--shadow-float);
+  }
+
+  /* Colonna orari: occupa tutte le righe e disegna le linee orizzontali */
+  .orari-ore {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-row: 2 / -1;
+    grid-template-rows: subgrid;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .orari-ore li {
+    grid-row: var(--r);
+    border-top: 1px solid var(--orari-linea);
+    padding-top: 6px;
+    font-family: "Oswald", sans-serif;
+    font-size: 0.95rem;
+    color: var(--testo-grigio);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .orari-ore li:nth-child(even) {
+    background: linear-gradient(90deg, transparent 3.5rem, var(--orari-bg-alt) 3.5rem);
+  }
+
+  /* Ogni giorno è una colonna che eredita le righe del board */
+  .orari-giorno {
+    grid-column: var(--c);
+    grid-row: 1 / -1;
+    display: grid;
+    grid-template-rows: subgrid;
+    background: none;
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+    box-shadow: none;
+    position: relative; /* sopra le linee della colonna orari */
+  }
+
+  .orari-giorno-nome {
+    font-size: 1.05rem;
+    text-align: center;
+    margin: 0;
+    padding-bottom: 10px;
+  }
+
+  .orari-lezioni {
+    display: grid;
+    grid-row: 2 / -1;
+    grid-template-rows: subgrid;
+    gap: 0;
+  }
+
+  .orari-slot {
+    grid-row: var(--r);
+    gap: 4px;
+    margin: 5px 0;
+  }
+
+  .lezione {
+    flex-direction: column;
+    gap: 0;
+    padding: 6px 8px;
+  }
+
+  .lezione-ora {
+    order: 2;
+    min-width: 0;
+    font-family: "Inter", "Roboto", sans-serif;
+    font-size: 0.75rem;
+    color: var(--testo-grigio);
+  }
+
+  .lezione-nome {
+    font-size: 0.8rem;
+    overflow-wrap: anywhere;
+  }
+}
+
+@media (min-width: 992px) {
+  .orari-board {
+    grid-template-columns: 4.5rem repeat(6, minmax(0, 1fr));
+    column-gap: 12px;
+    padding: 24px;
+  }
+
+  .lezione-nome {
+    font-size: 1rem;
+  }
+}
